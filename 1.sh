@@ -16,12 +16,17 @@ if [[ $# != 2 ]]; then
 fi
 
 if [[ ! $1 =~ ^[0-9]+$ ]]; then
-	echo "Anzahl der Ordner muss eine ganze Zahl sein"
+	echo "Anzahl der Ordner muss eine positive ganze Zahl sein"
 	exit
 fi
 
 if [[ ! $2 =~ ^[0-9]+$ ]]; then
-	echo "Anzahl der Dateien muss eine ganze Zahl sein"
+	echo "Anzahl der Dateien muss eine positive ganze Zahl sein"
+	exit
+fi
+
+if [[ $1 == 0 && $2 != 0 ]]; then
+	echo "Anzahl der Ordner kann nicht 0 sein."
 	exit
 fi
 

@@ -1,32 +1,35 @@
- #!/bin/bash
+#!/bin/bash
 
-if [[ $# -ne 2 ]];then
-	echo 'Anzahl der Parameter muss 2 sein!'
-	exit 1
+if [[ $# -lt 2 ]]; then
+    echo "Fehler: Es müssen mindestens 2 Parameter angegeben werden (Suchtext und Datei(en))!"
+    exit 1
 fi
 
-if [[ -z "$1" || "$1" == *$'\n'* ]];then
-	echo "Der Suchbegriff ist leer oder ungultig!"
-	exit 1
+SUCHTEXT="$1"
+shift
+
+if [[ -z "$SUCHTEXT" ]]; then
+    echo "Fehler: Der Suchbegriff darf nicht leer sein!"
+    exit 1
 fi
 
-if [[ "$2" != *.txt ]];then
-	echo "Der zweite Parameter muss eine .txt Datei sein!"
-	exit 1
-fi
+for FILE in "$@"; do
+    if [[ "$DATEI" != *.txt ]]; then
+        echo "Fehler: '$DATEI' ist keine .txt Datei!"
+        continue
+    fi
 
-if [[ ! -e "$2" ]];then
-	echo "Die Datei existiert nicht!"
-	exit 1
-fi
+    if [[ ! -e "$DATEI" ]]; then
+        echo "Fehler: Die Datei '$DATEI' existiert nicht!"
+        continue
+    fi
 
-if [[ ! -w "$2" || ! -r "$2" ]];then
-	echo "Die Datei kann nicht gelesen oder bearbeitet werden!"
-	exit 1
-fi
+    if [[ ! -r "$DATEI" ]]; then
+        echo "Fehler: Keine Leserechte für '$DATEI'!"
+        continue
+    fi
 
-
-
-sed -i "1,30{/$1/d}" "$2"
+    sed "1,30{/$SUCHTEXT/d;}" "$DATEI"
+done
 
 exit 0

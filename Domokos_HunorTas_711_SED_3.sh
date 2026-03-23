@@ -6,14 +6,14 @@ if [[ $# -lt 2 ]]; then
 fi
 
 SUCHTEXT="$1"
-shift
 
 if [[ -z "$SUCHTEXT" ]]; then
     echo "Fehler: Der Suchbegriff darf nicht leer sein!"
     exit 1
 fi
 
-for FILE in "$@"; do
+for DATEI in "${@:2}"; do
+    
     if [[ "$DATEI" != *.txt ]]; then
         echo "Fehler: '$DATEI' ist keine .txt Datei!"
         continue

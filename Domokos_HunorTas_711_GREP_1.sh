@@ -15,6 +15,6 @@ if [[ ! -r "$1" ]]; then
     exit 1
 fi
 
-grep -rh --include="*.txt" "^" "$1"
+grep -rhs --include="*.txt" "^" "$1"
 
 exit 0
